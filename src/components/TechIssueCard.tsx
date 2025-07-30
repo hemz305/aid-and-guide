@@ -26,7 +26,7 @@ export const TechIssueCard = ({ issue }: TechIssueCardProps) => {
   };
 
   return (
-    <Card className="group h-full bg-gradient-card hover:shadow-premium transition-all duration-300 cursor-pointer border-0 overflow-hidden">
+    <Card className="group h-full bg-gradient-card hover:shadow-premium hover:border-tech-blue hover:border-2 transition-all duration-300 cursor-pointer border-0 overflow-hidden hover:scale-105 hover:bg-tech-gray/20 dark:hover:bg-tech-blue/10">
       <CardContent className="p-6 h-full flex flex-col">
         <div className="flex items-start gap-4 mb-4">
           <div className="flex-shrink-0 p-3 bg-gradient-primary rounded-xl text-white group-hover:animate-float transition-all duration-300">

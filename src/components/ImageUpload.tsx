@@ -59,6 +59,7 @@ export const ImageUpload = () => {
                   accept="image/*"
                   onChange={handleFileSelect}
                   className="hidden"
+                  capture="environment"
                 />
                 <label
                   htmlFor="file-upload"
