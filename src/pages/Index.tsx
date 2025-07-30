@@ -1,6 +1,8 @@
 import { useState, useMemo } from "react";
+import { Header } from "@/components/Header";
 import { TechAssistHero } from "@/components/TechAssistHero";
 import { SearchBar } from "@/components/SearchBar";
+import { ImageUpload } from "@/components/ImageUpload";
 import { TechIssueCard } from "@/components/TechIssueCard";
 import { techIssues } from "@/data/techIssues";
 
@@ -21,16 +23,17 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Header />
       <TechAssistHero />
       
       <div className="container mx-auto px-6 py-12">
-        <div className="mb-12">
-          <SearchBar 
-            value={searchTerm}
-            onChange={setSearchTerm}
-            placeholder="Search technical issues quickly..."
-          />
-        </div>
+        <SearchBar 
+          value={searchTerm}
+          onChange={setSearchTerm}
+          placeholder="Search technical issues quickly..."
+        />
+        
+        <ImageUpload />
 
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-foreground mb-4 text-center">
@@ -57,11 +60,45 @@ const Index = () => {
         )}
       </div>
 
-      <footer className="bg-tech-gray py-8 mt-16">
-        <div className="container mx-auto px-6 text-center">
-          <p className="text-muted-foreground">
-            © 2024 TechAssist. Your trusted technical support companion.
-          </p>
+      <footer className="bg-tech-gray/50 py-12 mt-16 border-t border-border">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Contact Info */}
+            <div className="text-center md:text-left">
+              <h3 className="text-xl font-bold text-foreground mb-4">Contact Us</h3>
+              <div className="space-y-2 text-muted-foreground">
+                <p>📧 support@helptechdesk.com</p>
+                <p>📞 +91 98765 43210</p>
+                <p>📍 Brigade Road, Bangalore, Karnataka</p>
+              </div>
+            </div>
+            
+            {/* Quick Links */}
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-foreground mb-4">Quick Links</h3>
+              <div className="space-y-2 text-muted-foreground">
+                <p className="hover:text-tech-blue cursor-pointer">About Us</p>
+                <p className="hover:text-tech-blue cursor-pointer">Privacy Policy</p>
+                <p className="hover:text-tech-blue cursor-pointer">Terms of Service</p>
+              </div>
+            </div>
+            
+            {/* Business Hours */}
+            <div className="text-center md:text-right">
+              <h3 className="text-xl font-bold text-foreground mb-4">Support Hours</h3>
+              <div className="space-y-2 text-muted-foreground">
+                <p>Monday - Friday: 9:00 AM - 8:00 PM</p>
+                <p>Saturday: 10:00 AM - 6:00 PM</p>
+                <p>Sunday: 12:00 PM - 5:00 PM</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-border mt-8 pt-6 text-center">
+            <p className="text-muted-foreground">
+              © 2024 Help Tech Desk (HTD). Your trusted technical support companion.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
