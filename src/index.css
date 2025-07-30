@@ -2,32 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Premium TechAssist Design System - All colors MUST be HSL */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 216 50% 98%;
+    --foreground: 216 84% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 216 84% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 216 84% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 216 98% 52%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 216 20% 95%;
+    --secondary-foreground: 216 84% 12%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 216 20% 95%;
+    --muted-foreground: 216 25% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 142 76% 36%;
+    --accent-foreground: 0 0% 100%;
+
+    --tech-blue: 216 98% 52%;
+    --tech-blue-dark: 216 84% 42%;
+    --tech-green: 142 76% 36%;
+    --tech-orange: 25 95% 53%;
+    --tech-purple: 258 90% 66%;
+    --tech-gray: 216 20% 95%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(216 98% 52%), hsl(258 90% 66%));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(216 20% 98%));
+    --shadow-premium: 0 20px 25px -5px hsl(216 28% 7% / 0.1), 0 10px 10px -5px hsl(216 28% 7% / 0.04);
+    --shadow-card: 0 4px 6px -1px hsl(216 28% 7% / 0.1), 0 2px 4px -1px hsl(216 28% 7% / 0.06);
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
