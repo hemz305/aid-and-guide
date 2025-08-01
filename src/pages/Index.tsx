@@ -4,6 +4,7 @@ import { TechAssistHero } from "@/components/TechAssistHero";
 import { SearchBar } from "@/components/SearchBar";
 import { ImageUpload } from "@/components/ImageUpload";
 import { TechIssueCard } from "@/components/TechIssueCard";
+import { Sidebar } from "@/components/Sidebar";
 import { techIssues } from "@/data/techIssues";
 
 const Index = () => {
@@ -23,6 +24,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Sidebar />
       <Header />
       <TechAssistHero />
       

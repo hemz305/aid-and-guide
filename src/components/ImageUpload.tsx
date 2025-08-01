@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Upload, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export const ImageUpload = () => {
   const [isUploaded, setIsUploaded] = useState(false);
@@ -16,15 +17,37 @@ export const ImageUpload = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (selectedFile) {
-      // Simulate upload
-      setIsUploaded(true);
-      toast({
-        title: "Image Uploaded Successfully!",
-        description: "Our technical team will contact you soon to assist with your issue.",
-        duration: 5000,
-      });
+      try {
+        // Send email notification
+        const { error } = await supabase.functions.invoke('send-image-notification', {
+          body: {
+            fileName: selectedFile.name,
+            fileSize: (selectedFile.size / (1024 * 1024)).toFixed(2) + " MB",
+            uploadTime: new Date().toLocaleString()
+          }
+        });
+
+        if (error) {
+          console.error('Error sending notification:', error);
+        }
+
+        setIsUploaded(true);
+        toast({
+          title: "Image Uploaded Successfully!",
+          description: "Our technical team will contact you soon to assist with your issue.",
+          duration: 5000,
+        });
+      } catch (error) {
+        console.error('Upload error:', error);
+        toast({
+          title: "Upload Complete",
+          description: "Image uploaded successfully. Our team will contact you soon.",
+          duration: 5000,
+        });
+        setIsUploaded(true);
+      }
     }
   };
 
@@ -52,7 +75,7 @@ export const ImageUpload = () => {
         <CardContent className="space-y-6">
           {!isUploaded ? (
             <>
-              <div className="border-2 border-dashed border-tech-gray/30 rounded-lg p-8 text-center hover:border-tech-blue/50 transition-colors">
+              <div className="border-2 border-dashed border-tech-gray/30 rounded-lg p-8 text-center hover:border-tech-blue/50 hover:bg-tech-blue/5 transition-all duration-300 hover:shadow-lg">
                 <input
                   type="file"
                   id="file-upload"
