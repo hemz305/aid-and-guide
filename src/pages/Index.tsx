@@ -8,6 +8,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { techIssues } from "@/data/techIssues";
 
 const Index = () => {
+  console.log("Index page is rendering");
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredIssues = useMemo(() => {

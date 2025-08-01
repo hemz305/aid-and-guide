@@ -7,6 +7,7 @@ import { LiveChatModal } from "./LiveChatModal";
 import { FeedbackModal } from "./FeedbackModal";
 
 export const Sidebar = () => {
+  console.log("Sidebar component is rendering");
   const [bookCallOpen, setBookCallOpen] = useState(false);
   const [liveChatOpen, setLiveChatOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);

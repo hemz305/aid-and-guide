@@ -14,6 +14,7 @@ interface BookCallModalProps {
 }
 
 export const BookCallModal = ({ open, onOpenChange }: BookCallModalProps) => {
+  console.log("BookCallModal component rendered, open:", open);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
