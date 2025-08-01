@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Star, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface FeedbackModalProps {
   open: boolean;
@@ -56,21 +57,50 @@ export const FeedbackModal = ({ open, onOpenChange }: FeedbackModalProps) => {
     }
   };
 
-  const handleSubmit = () => {
-    setIsComplete(true);
-    toast({
-      title: "Thank you for your feedback!",
-      description: "Your responses help us improve our service quality.",
-      duration: 5000,
-    });
-    
-    // Reset after 3 seconds
-    setTimeout(() => {
-      setIsComplete(false);
-      setCurrentQuestionIndex(0);
-      setAnswers({});
-      onOpenChange(false);
-    }, 3000);
+  const handleSubmit = async () => {
+    try {
+      // Send feedback to email
+      const { error } = await supabase.functions.invoke('send-feedback', {
+        body: {
+          answers,
+          userEmail: 'anonymous' // You can get user email from auth if available
+        }
+      });
+
+      if (error) {
+        console.error('Error sending feedback:', error);
+        toast({
+          title: "Error sending feedback",
+          description: "Please try again later.",
+          variant: "destructive",
+          duration: 5000,
+        });
+        return;
+      }
+
+      setIsComplete(true);
+      toast({
+        title: "Thank you for your feedback!",
+        description: "Your responses have been sent and help us improve our service quality.",
+        duration: 5000,
+      });
+      
+      // Reset after 3 seconds
+      setTimeout(() => {
+        setIsComplete(false);
+        setCurrentQuestionIndex(0);
+        setAnswers({});
+        onOpenChange(false);
+      }, 3000);
+    } catch (error) {
+      console.error('Error:', error);
+      toast({
+        title: "Error sending feedback",
+        description: "Please try again later.",
+        variant: "destructive",
+        duration: 5000,
+      });
+    }
   };
 
   const isCurrentAnswered = () => {

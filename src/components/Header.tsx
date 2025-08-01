@@ -32,9 +32,6 @@ export const Header = () => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
 
   const scrollToCategories = () => {
     const categoriesSection = document.getElementById("tech-categories");
@@ -53,10 +50,7 @@ export const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-2">
-            <div 
-              className="bg-gradient-primary text-white rounded-xl p-3 shadow-premium cursor-pointer hover:shadow-card transition-all duration-300 hover:scale-105"
-              onClick={toggleTheme}
-            >
+            <div className="bg-gradient-primary text-white rounded-xl p-3 shadow-premium transition-all duration-300 hover:scale-105">
               <span className="text-2xl font-bold">HTD</span>
             </div>
             <div className="hidden sm:block">
