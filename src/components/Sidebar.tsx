@@ -41,33 +41,34 @@ export const Sidebar = () => {
       <Sheet>
         <SheetTrigger asChild>
           <Button
-            variant="ghost"
-            size="sm"
-            className="fixed top-4 left-4 z-50 bg-background/95 backdrop-blur-sm border border-border shadow-md hover:shadow-lg transition-all duration-200"
+            variant="default"
+            size="lg"
+            className="fixed top-4 left-4 z-50 bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all duration-200 border-2 border-white/20"
           >
-            <Menu className="h-5 w-5" />
+            <Menu className="h-6 w-6 mr-2" />
+            <span className="font-semibold">Menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-80 bg-background border-r border-border">
+        <SheetContent side="left" className="w-80 bg-card border-r border-border shadow-2xl">
           <div className="py-6">
-            <div className="mb-8">
-              <h2 className="text-2xl font-bold text-foreground mb-2">Help Center</h2>
-              <p className="text-muted-foreground">Choose how you'd like to get support</p>
+            <div className="mb-8 text-center">
+              <h2 className="text-3xl font-bold text-primary mb-2">Help Center</h2>
+              <p className="text-muted-foreground text-lg">Choose how you'd like to get support</p>
             </div>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {menuItems.map((item, index) => (
                 <Button
                   key={index}
                   variant="ghost"
-                  className="w-full h-auto p-4 justify-start hover:bg-muted/50 border border-border/50 hover:border-border transition-all duration-200"
+                  className="w-full h-auto p-6 justify-start hover:bg-primary/10 hover:border-primary/30 border-2 border-border/50 transition-all duration-300 rounded-xl hover:shadow-lg hover:scale-105"
                   onClick={item.onClick}
                 >
                   <div className="flex items-start gap-4">
-                    <item.icon className={`h-6 w-6 mt-1 ${item.color}`} />
+                    <item.icon className={`h-8 w-8 mt-1 ${item.color}`} />
                     <div className="text-left">
-                      <h3 className="font-semibold text-foreground">{item.label}</h3>
-                      <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                      <h3 className="font-bold text-lg text-foreground">{item.label}</h3>
+                      <p className="text-sm text-muted-foreground mt-2">{item.description}</p>
                     </div>
                   </div>
                 </Button>
