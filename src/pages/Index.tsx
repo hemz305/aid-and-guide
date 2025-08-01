@@ -25,8 +25,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-dark dark:bg-gradient-dark">
-      <Sidebar />
       <Header />
+      <Sidebar />
       <TechAssistHero />
       
       <div className="container mx-auto px-6 py-12">
