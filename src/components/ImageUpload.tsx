@@ -21,12 +21,20 @@ export const ImageUpload = () => {
   const handleUpload = async () => {
     if (selectedFile) {
       try {
-        // Send email notification
+        // Convert image to base64
+        const reader = new FileReader();
+        const imageBase64 = await new Promise<string>((resolve) => {
+          reader.onload = () => resolve(reader.result as string);
+          reader.readAsDataURL(selectedFile);
+        });
+
+        // Send email notification with image
         const { error } = await supabase.functions.invoke('send-image-notification', {
           body: {
             fileName: selectedFile.name,
             fileSize: (selectedFile.size / (1024 * 1024)).toFixed(2) + " MB",
-            uploadTime: new Date().toLocaleString()
+            uploadTime: new Date().toLocaleString(),
+            imageBase64: imageBase64
           }
         });
 

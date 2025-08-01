@@ -24,7 +24,7 @@ const Index = () => {
   }, [searchTerm]);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-dark dark:bg-gradient-dark">
       <Sidebar />
       <Header />
       <TechAssistHero />

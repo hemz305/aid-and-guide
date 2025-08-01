@@ -13,6 +13,7 @@ interface ImageNotificationRequest {
   fileName: string;
   fileSize: string;
   uploadTime: string;
+  imageBase64?: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -22,12 +23,19 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { fileName, fileSize, uploadTime }: ImageNotificationRequest = await req.json();
+    const { fileName, fileSize, uploadTime, imageBase64 }: ImageNotificationRequest = await req.json();
+
+    const attachments = imageBase64 ? [{
+      filename: fileName,
+      content: imageBase64.split(',')[1], // Remove data:image/png;base64, prefix
+      type: "attachment"
+    }] : [];
 
     const emailResponse = await resend.emails.send({
       from: "Help Tech Desk <onboarding@resend.dev>",
       to: ["hemanthkala04@gmail.com"],
       subject: "New Technical Issue Image Uploaded",
+      attachments,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <h2 style="color: #2563eb; margin-bottom: 20px;">New Technical Issue Image Received</h2>
@@ -40,6 +48,13 @@ const handler = async (req: Request): Promise<Response> => {
               <li><strong>Upload Time:</strong> ${uploadTime}</li>
             </ul>
           </div>
+          
+          ${imageBase64 ? `
+          <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+            <h3 style="margin-top: 0; color: #15803d;">Uploaded Image:</h3>
+            <img src="${imageBase64}" alt="Technical Issue Screenshot" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #e2e8f0;" />
+          </div>
+          ` : ''}
           
           <div style="background: #dbeafe; padding: 15px; border-radius: 8px; border-left: 4px solid #2563eb;">
             <p style="margin: 0; color: #1e40af;">
