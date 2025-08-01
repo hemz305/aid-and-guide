@@ -4,25 +4,24 @@ import { Download } from "lucide-react";
 import { useState } from "react";
 import { toast } from "@/hooks/use-toast";
 import { TechIssue } from "@/data/techIssues";
+import { useNavigate } from "react-router-dom";
 
 interface TechIssueCardProps {
   issue: TechIssue;
 }
 
 export const TechIssueCard = ({ issue }: TechIssueCardProps) => {
-  const [isDownloading, setIsDownloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleDownload = async () => {
-    setIsDownloading(true);
+    setIsLoading(true);
     
-    // Simulate PDF download process
+    // Navigate to solutions page for this issue
     setTimeout(() => {
-      toast({
-        title: "Download Started",
-        description: `${issue.title} guide is being downloaded.`,
-      });
-      setIsDownloading(false);
-    }, 1000);
+      navigate(`/solutions/${issue.id}`);
+      setIsLoading(false);
+    }, 500);
   };
 
   return (
@@ -48,11 +47,11 @@ export const TechIssueCard = ({ issue }: TechIssueCardProps) => {
         
         <Button 
           onClick={handleDownload}
-          disabled={isDownloading}
+          disabled={isLoading}
           className="w-full bg-gradient-primary hover:bg-tech-blue-dark text-white border-0 shadow-card hover:shadow-premium transition-all duration-300"
         >
           <Download className="w-4 h-4 mr-2" />
-          {isDownloading ? "Downloading..." : "Download Guide"}
+          {isLoading ? "Loading..." : "Download"}
         </Button>
       </CardContent>
     </Card>

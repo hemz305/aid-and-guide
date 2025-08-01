@@ -13,6 +13,7 @@ export const Sidebar = () => {
   const [liveChatOpen, setLiveChatOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("english");
+  const [tempLanguage, setTempLanguage] = useState("english");
 
   const languages = [
     { value: "english", label: "English" },
@@ -99,7 +100,7 @@ export const Sidebar = () => {
                   <Globe className="h-6 w-6 text-primary" />
                   <h3 className="font-bold text-base text-foreground">Language</h3>
                 </div>
-                <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+                <Select value={tempLanguage} onValueChange={setTempLanguage}>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select Language" />
                   </SelectTrigger>
@@ -111,6 +112,16 @@ export const Sidebar = () => {
                     ))}
                   </SelectContent>
                 </Select>
+                <Button 
+                  className="w-full mt-3 bg-gradient-primary text-white"
+                  onClick={() => {
+                    setSelectedLanguage(tempLanguage);
+                    // Here you would implement the actual language change
+                    console.log('Language changed to:', tempLanguage);
+                  }}
+                >
+                  Submit
+                </Button>
               </div>
             </div>
           </div>
