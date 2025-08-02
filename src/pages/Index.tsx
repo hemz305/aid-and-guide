@@ -74,7 +74,7 @@ const Index = () => {
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
                   </svg>
-                  <p>support@helptechdesk.com</p>
+                  <p>hemanthkala04@gmail.com</p>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-3">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

@@ -39,21 +39,24 @@ export const Sidebar = () => {
       label: "Book a Call",
       description: "Schedule a video call with our experts",
       onClick: () => setBookCallOpen(true),
-      color: "text-tech-blue"
+      color: "text-tech-blue",
+      dataAttr: "data-book-call-trigger"
     },
     {
       icon: MessageCircle,
       label: "Live Chat",
       description: "Get instant answers to your questions",
       onClick: () => setLiveChatOpen(true),
-      color: "text-tech-green"
+      color: "text-tech-green",
+      dataAttr: "data-live-chat-trigger"
     },
     {
       icon: Star,
       label: "Feedback",
       description: "Share your experience with us",
       onClick: () => setFeedbackOpen(true),
-      color: "text-tech-orange"
+      color: "text-tech-orange",
+      dataAttr: ""
     }
   ];
 
@@ -83,12 +86,13 @@ export const Sidebar = () => {
                   variant="ghost"
                   className="w-full h-auto p-4 justify-start hover:bg-primary/10 hover:border-primary/30 border-2 border-border/50 transition-all duration-300 rounded-xl hover:shadow-lg"
                   onClick={item.onClick}
+                  {...(item.dataAttr && { [item.dataAttr]: true })}
                 >
                   <div className="flex items-start gap-3 w-full">
                     <item.icon className={`h-6 w-6 flex-shrink-0 ${item.color}`} />
                     <div className="text-left flex-1 min-w-0">
-                      <h3 className="font-bold text-base text-foreground">{item.label}</h3>
-                      <p className="text-xs text-muted-foreground mt-1 break-words">{item.description}</p>
+                      <h3 className="font-bold text-base text-foreground whitespace-nowrap overflow-hidden text-ellipsis">{item.label}</h3>
+                      <p className="text-xs text-muted-foreground mt-1 break-words leading-tight">{item.description}</p>
                     </div>
                   </div>
                 </Button>
@@ -116,11 +120,28 @@ export const Sidebar = () => {
                   className="w-full mt-3 bg-gradient-primary text-white"
                   onClick={() => {
                     setSelectedLanguage(tempLanguage);
-                    // Here you would implement the actual language change
+                    // Trigger language translation
+                    const event = new CustomEvent('languageChange', { detail: { language: tempLanguage } });
+                    window.dispatchEvent(event);
                     console.log('Language changed to:', tempLanguage);
                   }}
                 >
                   Submit
+                </Button>
+                
+                {/* Logout Button */}
+                <Button 
+                  className="w-full mt-4 bg-red-600 hover:bg-red-700 text-white"
+                  onClick={() => {
+                    // Handle logout logic here
+                    console.log('Logging out...');
+                    // You would implement actual logout functionality
+                  }}
+                >
+                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clipRule="evenodd" />
+                  </svg>
+                  Logout
                 </Button>
               </div>
             </div>
