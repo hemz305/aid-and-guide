@@ -21,7 +21,19 @@ export const FeedbackModal = ({ open, onOpenChange }: FeedbackModalProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, any>>({});
   const [isComplete, setIsComplete] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
   const { toast } = useToast();
+
+  const getEmojiForRating = (rating: number) => {
+    switch (rating) {
+      case 1: return "😞";
+      case 2: return "😐";
+      case 3: return "🙂";
+      case 4: return "😊";
+      case 5: return "😄";
+      default: return "";
+    }
+  };
 
   const questions: Question[] = [
     { id: 'overall', question: 'How would you rate your overall experience with Help Tech Desk?', type: 'rating' },
@@ -114,22 +126,29 @@ export const FeedbackModal = ({ open, onOpenChange }: FeedbackModalProps) => {
     const currentRating = answers[currentQuestion.id] || 0;
     
     return (
-      <div className="flex gap-2 justify-center my-8">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <button
-            key={star}
-            onClick={() => handleRatingClick(star)}
-            className="transition-all duration-200 hover:scale-110"
-          >
-            <Star
-              className={`h-12 w-12 ${
-                star <= currentRating
-                  ? 'fill-tech-orange text-tech-orange'
-                  : 'text-muted-foreground hover:text-tech-orange'
-              }`}
-            />
-          </button>
-        ))}
+      <div className="space-y-4">
+        <div className="flex gap-2 justify-center my-8">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              onClick={() => handleRatingClick(star)}
+              className="transition-all duration-200 hover:scale-110"
+            >
+              <Star
+                className={`h-12 w-12 ${
+                  star <= currentRating
+                    ? 'fill-tech-orange text-tech-orange'
+                    : 'text-muted-foreground hover:text-tech-orange'
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+        {currentRating > 0 && (
+          <div className="text-center">
+            <span className="text-4xl">{getEmojiForRating(currentRating)}</span>
+          </div>
+        )}
       </div>
     );
   };
@@ -137,11 +156,11 @@ export const FeedbackModal = ({ open, onOpenChange }: FeedbackModalProps) => {
   if (isComplete) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-[500px] bg-gray-900 border-gray-700">
           <div className="text-center py-8">
             <CheckCircle className="h-16 w-16 text-tech-green mx-auto mb-4" />
-            <h2 className="text-2xl font-bold text-foreground mb-2">Thank You!</h2>
-            <p className="text-muted-foreground">
+            <h2 className="text-2xl font-bold text-white mb-2">Thank You!</h2>
+            <p className="text-gray-300">
               Your feedback has been submitted successfully. We appreciate you taking the time to help us improve.
             </p>
           </div>
@@ -152,20 +171,38 @@ export const FeedbackModal = ({ open, onOpenChange }: FeedbackModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className={`${isMaximized ? 'max-w-[95vw] h-[95vh]' : 'sm:max-w-[600px]'} bg-gray-900 border-gray-700`}>
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <Star className="h-5 w-5 text-tech-orange" />
-            Share Your Feedback
+          <DialogTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Star className="h-5 w-5 text-tech-orange" />
+              <span className="text-white">Share Your Feedback</span>
+            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMaximized(!isMaximized)}
+              className="text-white hover:bg-gray-800"
+            >
+              {isMaximized ? (
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9V4.5M9 9H4.5M9 9L3.5 3.5M15 15v4.5M15 15h4.5M15 15l5.5 5.5" />
+                </svg>
+              ) : (
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                </svg>
+              )}
+            </Button>
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-gray-300">
             Question {currentQuestionIndex + 1} of {questions.length}
           </DialogDescription>
         </DialogHeader>
 
         <div className="py-6">
           <div className="mb-4">
-            <div className="w-full bg-muted rounded-full h-2">
+            <div className="w-full bg-gray-700 rounded-full h-2">
               <div 
                 className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
                 style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
@@ -173,14 +210,14 @@ export const FeedbackModal = ({ open, onOpenChange }: FeedbackModalProps) => {
             </div>
           </div>
 
-          <h3 className="text-lg font-semibold text-foreground mb-6 text-center">
+          <h3 className="text-lg font-semibold text-white mb-6 text-center">
             {currentQuestion.question}
           </h3>
 
           {currentQuestion.type === 'rating' ? (
             <>
               {renderStarRating()}
-              <div className="flex justify-between text-sm text-muted-foreground mt-2">
+              <div className="flex justify-between text-sm text-gray-300 mt-2">
                 <span>Poor</span>
                 <span>Excellent</span>
               </div>
@@ -190,8 +227,8 @@ export const FeedbackModal = ({ open, onOpenChange }: FeedbackModalProps) => {
               value={answers[currentQuestion.id] || ''}
               onChange={(e) => handleTextChange(e.target.value)}
               placeholder="Please share your thoughts..."
+              className="w-full bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               rows={4}
-              className="w-full"
             />
           )}
         </div>
@@ -201,6 +238,7 @@ export const FeedbackModal = ({ open, onOpenChange }: FeedbackModalProps) => {
             variant="outline"
             onClick={handlePrevious}
             disabled={currentQuestionIndex === 0}
+            className="border-gray-600 text-white hover:bg-gray-700"
           >
             Previous
           </Button>
@@ -209,6 +247,7 @@ export const FeedbackModal = ({ open, onOpenChange }: FeedbackModalProps) => {
             <Button
               variant="ghost"
               onClick={() => onOpenChange(false)}
+              className="text-white hover:bg-gray-700"
             >
               Skip Survey
             </Button>

@@ -30,6 +30,7 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [isMaximized, setIsMaximized] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
@@ -111,19 +112,39 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] h-[80vh] flex flex-col">
+      <DialogContent className={`${isMaximized ? 'max-w-[95vw] h-[95vh]' : 'sm:max-w-[600px] h-[80vh]'} flex flex-col bg-gray-900 border-gray-700`}>
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
-            <MessageCircle className="h-5 w-5 text-tech-green" />
-            Live Technical Support Chat
+          <DialogTitle className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <MessageCircle className="h-5 w-5 text-tech-green" />
+              <span className="text-white">Live Technical Support Chat</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsMaximized(!isMaximized)}
+                className="text-white hover:bg-gray-800"
+              >
+                {isMaximized ? (
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9V4.5M9 9H4.5M9 9L3.5 3.5M15 15v4.5M15 15h4.5M15 15l5.5 5.5" />
+                  </svg>
+                ) : (
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                  </svg>
+                )}
+              </Button>
+            </div>
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-gray-300">
             Get instant answers to your technical questions. Our AI searches real-time information to help you.
           </DialogDescription>
         </DialogHeader>
 
         <div className="flex-1 flex flex-col min-h-0">
-          <ScrollArea ref={scrollAreaRef} className="flex-1 pr-4">
+          <ScrollArea ref={scrollAreaRef} className="flex-1 pr-4 bg-gray-800">
             <div className="space-y-4 p-4">
               {messages.map((message) => (
                 <div
@@ -139,11 +160,11 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
                     className={`max-w-[80%] p-3 rounded-lg ${
                       message.isUser
                         ? 'bg-gradient-primary text-white'
-                        : 'bg-muted'
+                        : 'bg-gray-700 text-white'
                     }`}
                   >
-                    <p className="text-sm whitespace-pre-wrap">{message.text}</p>
-                    <span className={`text-xs opacity-70 ${message.isUser ? 'text-white/70' : 'text-muted-foreground'}`}>
+                    <p className="text-sm whitespace-pre-wrap text-white">{message.text}</p>
+                    <span className={`text-xs opacity-70 ${message.isUser ? 'text-white/70' : 'text-gray-300'}`}>
                       {message.timestamp.toLocaleTimeString()}
                     </span>
                   </div>
@@ -171,15 +192,15 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
             </div>
           </ScrollArea>
 
-          <div className="border-t border-border p-4">
+          <div className="border-t border-gray-600 p-4 bg-gray-800">
             {selectedImage && (
-              <div className="mb-3 p-2 bg-muted rounded-lg">
-                <p className="text-sm text-muted-foreground">Image selected for analysis</p>
+              <div className="mb-3 p-2 bg-gray-700 rounded-lg">
+                <p className="text-sm text-gray-300">Image selected for analysis</p>
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setSelectedImage(null)}
-                  className="mt-1 h-6 px-2 text-xs"
+                  className="mt-1 h-6 px-2 text-xs text-white hover:bg-gray-600"
                 >
                   Remove
                 </Button>
@@ -198,7 +219,7 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
                 size="sm"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isLoading}
-                className="flex-shrink-0"
+                className="flex-shrink-0 border-gray-600 text-white hover:bg-gray-700"
               >
                 <Upload className="h-4 w-4" />
               </Button>
@@ -208,7 +229,7 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
                 onKeyPress={handleKeyPress}
                 placeholder="Ask any technical question or upload an image..."
                 disabled={isLoading}
-                className="flex-1"
+                className="flex-1 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               />
               <Button
                 onClick={handleSend}
@@ -218,7 +239,7 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
                 <Send className="h-4 w-4" />
               </Button>
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="text-xs text-gray-300 mt-2">
               Ask about technical issues or upload an image for AI analysis powered by Google Gemini!
             </p>
           </div>
