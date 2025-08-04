@@ -67,8 +67,8 @@ export default function Solutions() {
           <h2 className="text-3xl font-bold text-white mb-6">Step-by-Step Solutions</h2>
           
           {solutions.length > 0 ? (
-            solutions.map((solution, index) => (
-              <Card key={index} className="bg-gradient-card border-2 border-tech-blue shadow-card hover:shadow-premium transition-all duration-300">
+              solutions.map((solution, index) => (
+                <Card key={index} className="bg-white border-2 border-tech-blue shadow-card hover:shadow-premium transition-all duration-300">
                 <CardContent className="p-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0 flex items-center justify-center w-12 h-12 bg-primary rounded-full text-primary-foreground font-bold text-lg">
@@ -76,9 +76,9 @@ export default function Solutions() {
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-xl font-semibold text-white">{solution.title}</h3>
+                        <h3 className="text-xl font-semibold text-black">{solution.title}</h3>
                       </div>
-                      <p className="text-white/80 leading-relaxed">{solution.description}</p>
+                      <p className="text-black leading-relaxed">{solution.description}</p>
                     </div>
                   </div>
                 </CardContent>

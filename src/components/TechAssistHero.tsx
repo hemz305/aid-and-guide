@@ -41,7 +41,7 @@ export const TechAssistHero = () => {
           <Button 
             onClick={scrollToCategories}
             size="lg" 
-            className="bg-gradient-primary hover:bg-tech-blue-dark text-white px-8 py-4 text-lg font-medium shadow-premium hover:shadow-glow transition-all duration-300 hover:scale-105"
+            className="bg-gradient-primary hover:bg-tech-blue-dark text-white px-8 py-4 text-lg font-medium shadow-premium hover:shadow-glow transition-all duration-300 hover:scale-105 animate-slide-in-left"
           >
             <Sparkles className="mr-2 h-5 w-5" />
             Get Started

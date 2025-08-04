@@ -485,6 +485,60 @@ export const solutionsData = {
       description: "Remove Bluetooth device from list, then pair it again from scratch."
     }
   ],
+  "file-access-issues": [
+    {
+      step: 1,
+      title: "Check File Permissions",
+      description: "Right-click the file > Properties > Security tab and ensure you have read/write permissions."
+    },
+    {
+      step: 2,
+      title: "Run as Administrator",
+      description: "Right-click the application and select 'Run as administrator' to access restricted files."
+    },
+    {
+      step: 3,
+      title: "Change File Association",
+      description: "Right-click file > Open with > Choose another app and select the correct program."
+    },
+    {
+      step: 4,
+      title: "Check File Corruption",
+      description: "Try opening the file on another computer or use file repair tools if available."
+    },
+    {
+      step: 5,
+      title: "Disable Antivirus Temporarily",
+      description: "Temporarily disable antivirus to check if it's blocking file access, then add exception."
+    }
+  ],
+  "login-issues": [
+    {
+      step: 1,
+      title: "Reset Windows Password",
+      description: "Use password reset disk if available, or boot from Windows installation media and access recovery options."
+    },
+    {
+      step: 2,
+      title: "Use Safe Mode",
+      description: "Boot into Safe Mode by pressing F8 during startup and try logging in with administrator account."
+    },
+    {
+      step: 3,
+      title: "Create New User Account",
+      description: "Boot from Windows installation media > Repair > Command Prompt and create new admin account."
+    },
+    {
+      step: 4,
+      title: "Use Password Reset Tools",
+      description: "Create bootable password reset disk using tools like Ophcrack or PCUnlocker."
+    },
+    {
+      step: 5,
+      title: "Contact System Administrator",
+      description: "If on domain network, contact IT administrator for password reset assistance."
+    }
+  ],
   "email-sync-issues": [
     {
       step: 1,

@@ -88,7 +88,7 @@ export const BookCallModal = ({ open, onOpenChange }: BookCallModalProps) => {
               variant="ghost"
               size="sm"
               onClick={() => setIsMaximized(!isMaximized)}
-              className="text-white hover:bg-gray-800"
+              className="text-white hover:bg-gray-800 bg-white/10"
             >
               {isMaximized ? (
                 <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -207,7 +207,7 @@ export const BookCallModal = ({ open, onOpenChange }: BookCallModalProps) => {
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="border-gray-600 text-white hover:bg-gray-700"
+              className="border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white"
             >
               Cancel
             </Button>

@@ -329,6 +329,74 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
 
   const setLanguage = (language: Language) => {
     setCurrentLanguage(language);
+    // Translate the entire page content
+    if (language !== 'english') {
+      translatePageContent(language);
+    }
+  };
+
+  const translatePageContent = async (targetLanguage: Language) => {
+    try {
+      // Get all text elements on the page
+      const textElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, button, a, label, input[placeholder], textarea[placeholder]');
+      
+      for (const element of textElements) {
+        const originalText = element.textContent || (element as HTMLInputElement).placeholder || '';
+        if (originalText && originalText.trim()) {
+          // Check if translation exists in our predefined translations
+          const translationKey = Object.keys(translations).find(key => 
+            translations[key].english.toLowerCase() === originalText.toLowerCase()
+          );
+          
+          if (translationKey) {
+            const translatedText = translations[translationKey][targetLanguage];
+            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+              (element as HTMLInputElement).placeholder = translatedText;
+            } else {
+              element.textContent = translatedText;
+            }
+          } else {
+            // Use Google Translate API for other text
+            try {
+              const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${getLanguageCode(targetLanguage)}&dt=t&q=${encodeURIComponent(originalText)}`);
+              const data = await response.json();
+              const translatedText = data[0][0][0];
+              
+              if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                (element as HTMLInputElement).placeholder = translatedText;
+              } else {
+                element.textContent = translatedText;
+              }
+            } catch (error) {
+              console.log('Translation error:', error);
+            }
+          }
+        }
+      }
+    } catch (error) {
+      console.log('Page translation error:', error);
+    }
+  };
+
+  const getLanguageCode = (language: Language): string => {
+    const codes: { [key in Language]: string } = {
+      english: 'en',
+      spanish: 'es',
+      french: 'fr',
+      german: 'de',
+      italian: 'it',
+      portuguese: 'pt',
+      chinese: 'zh',
+      japanese: 'ja',
+      korean: 'ko',
+      russian: 'ru',
+      arabic: 'ar',
+      hindi: 'hi',
+      dutch: 'nl',
+      swedish: 'sv',
+      norwegian: 'no'
+    };
+    return codes[language];
   };
 
   const t = (key: string): string => {

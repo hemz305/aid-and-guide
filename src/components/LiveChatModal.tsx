@@ -112,7 +112,7 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className={`${isMaximized ? 'max-w-[95vw] h-[95vh]' : 'sm:max-w-[600px] h-[80vh]'} flex flex-col bg-gray-900 border-gray-700`}>
+      <DialogContent className={`${isMaximized ? 'max-w-[95vw] h-[95vh]' : 'sm:max-w-[600px] max-w-[95vw] h-[80vh]'} flex flex-col bg-gray-900 border-gray-700`}>
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -120,12 +120,12 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
               <span className="text-white">Live Technical Support Chat</span>
             </div>
             <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setIsMaximized(!isMaximized)}
-                className="text-white hover:bg-gray-800"
-              >
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setIsMaximized(!isMaximized)}
+              className="text-white hover:bg-gray-800 bg-white/10"
+            >
                 {isMaximized ? (
                   <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9V4.5M9 9H4.5M9 9L3.5 3.5M15 15v4.5M15 15h4.5M15 15l5.5 5.5" />
@@ -219,7 +219,7 @@ export const LiveChatModal = ({ open, onOpenChange }: LiveChatModalProps) => {
                 size="sm"
                 onClick={() => fileInputRef.current?.click()}
                 disabled={isLoading}
-                className="flex-shrink-0 border-gray-600 text-white hover:bg-gray-700"
+                className="flex-shrink-0 border-white text-white hover:bg-white hover:text-black bg-white/10"
               >
                 <Upload className="h-4 w-4" />
               </Button>
