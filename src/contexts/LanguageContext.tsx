@@ -337,44 +337,78 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
 
   const translatePageContent = async (targetLanguage: Language) => {
     try {
+      // Show loading indicator
+      document.body.style.cursor = 'wait';
+      
       // Get all text elements on the page
-      const textElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, button, a, label, input[placeholder], textarea[placeholder]');
+      const textElements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, button, a, label, input[placeholder], textarea[placeholder], div');
+      
+      // Batch translate text elements
+      const elementsToTranslate: { element: Element; text: string }[] = [];
       
       for (const element of textElements) {
         const originalText = element.textContent || (element as HTMLInputElement).placeholder || '';
-        if (originalText && originalText.trim()) {
-          // Check if translation exists in our predefined translations
-          const translationKey = Object.keys(translations).find(key => 
-            translations[key].english.toLowerCase() === originalText.toLowerCase()
-          );
-          
-          if (translationKey) {
-            const translatedText = translations[translationKey][targetLanguage];
-            if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
-              (element as HTMLInputElement).placeholder = translatedText;
-            } else {
-              element.textContent = translatedText;
-            }
-          } else {
-            // Use Google Translate API for other text
-            try {
-              const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${getLanguageCode(targetLanguage)}&dt=t&q=${encodeURIComponent(originalText)}`);
-              const data = await response.json();
-              const translatedText = data[0][0][0];
-              
+        if (originalText && originalText.trim() && originalText.length > 1) {
+          // Skip elements that are already translated or contain only numbers/symbols
+          if (!/^[\d\s\-+().,!?@#$%^&*]+$/.test(originalText)) {
+            // Check if translation exists in our predefined translations
+            const translationKey = Object.keys(translations).find(key => 
+              translations[key].english.toLowerCase() === originalText.toLowerCase()
+            );
+            
+            if (translationKey) {
+              const translatedText = translations[translationKey][targetLanguage];
               if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
                 (element as HTMLInputElement).placeholder = translatedText;
               } else {
                 element.textContent = translatedText;
               }
-            } catch (error) {
-              console.log('Translation error:', error);
+            } else {
+              elementsToTranslate.push({ element, text: originalText });
             }
           }
         }
       }
+      
+      // Translate remaining elements using Google Translate API
+      if (elementsToTranslate.length > 0) {
+        // Process in batches to avoid overwhelming the API
+        const batchSize = 10;
+        for (let i = 0; i < elementsToTranslate.length; i += batchSize) {
+          const batch = elementsToTranslate.slice(i, i + batchSize);
+          
+          await Promise.all(batch.map(async ({ element, text }) => {
+            try {
+              const response = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${getLanguageCode(targetLanguage)}&dt=t&q=${encodeURIComponent(text)}`);
+              const data = await response.json();
+              
+              if (data && data[0] && data[0][0] && data[0][0][0]) {
+                const translatedText = data[0][0][0];
+                
+                if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                  (element as HTMLInputElement).placeholder = translatedText;
+                } else {
+                  element.textContent = translatedText;
+                }
+              }
+            } catch (error) {
+              console.log('Translation error for text:', text, error);
+            }
+          }));
+          
+          // Add small delay between batches to avoid rate limiting
+          if (i + batchSize < elementsToTranslate.length) {
+            await new Promise(resolve => setTimeout(resolve, 100));
+          }
+        }
+      }
+      
+      // Remove loading indicator
+      document.body.style.cursor = 'default';
+      
     } catch (error) {
       console.log('Page translation error:', error);
+      document.body.style.cursor = 'default';
     }
   };
 

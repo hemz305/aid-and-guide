@@ -215,6 +215,60 @@ export const solutionsData = {
       description: "Run speed test at fast.com or speedtest.net to verify internet connection speed."
     }
   ],
+  "browser-problems": [
+    {
+      step: 1,
+      title: "Clear DNS Cache",
+      description: "Open Command Prompt as admin and run: ipconfig /flushdns to clear DNS cache."
+    },
+    {
+      step: 2,
+      title: "Disable Browser Extensions",
+      description: "Go to browser menu > Extensions and disable all extensions to check if one is causing issues."
+    },
+    {
+      step: 3,
+      title: "Clear Browser Data",
+      description: "Press Ctrl+Shift+Delete and clear browsing data including cookies, cache, and site data."
+    },
+    {
+      step: 4,
+      title: "Try Incognito/Private Mode",
+      description: "Press Ctrl+Shift+N (Chrome) or Ctrl+Shift+P (Firefox) to browse in private mode."
+    },
+    {
+      step: 5,
+      title: "Reset Network Settings",
+      description: "Run these commands in Command Prompt as admin: netsh winsock reset, netsh int ip reset"
+    }
+  ],
+  "printer-not-responding": [
+    {
+      step: 1,
+      title: "Check Printer Power and Connections",
+      description: "Ensure printer is powered on and properly connected via USB or network cable. Check indicator lights."
+    },
+    {
+      step: 2,
+      title: "Restart Print Spooler Service",
+      description: "Press Win+R, type services.msc, find Print Spooler service, right-click and restart it."
+    },
+    {
+      step: 3,
+      title: "Update Printer Drivers",
+      description: "Visit printer manufacturer's website and download the latest drivers for your specific model."
+    },
+    {
+      step: 4,
+      title: "Clear Print Queue",
+      description: "Settings > Devices > Printers & scanners > Select printer > Open queue > Cancel all stuck documents."
+    },
+    {
+      step: 5,
+      title: "Run Printer Troubleshooter",
+      description: "Settings > Update & Security > Troubleshoot > Printer > Run the troubleshooter to auto-fix issues."
+    }
+  ],
   "forgot-password": [
     {
       step: 1,
@@ -270,6 +324,33 @@ export const solutionsData = {
     }
   ],
   "software-error": [
+    {
+      step: 1,
+      title: "Restart the Application",
+      description: "Close the software completely and reopen it to clear temporary glitches."
+    },
+    {
+      step: 2,
+      title: "Run as Administrator",
+      description: "Right-click software icon and select 'Run as administrator' to provide elevated permissions."
+    },
+    {
+      step: 3,
+      title: "Update the Software",
+      description: "Check for updates in the application's help menu or download from official website."
+    },
+    {
+      step: 4,
+      title: "Check System Requirements",
+      description: "Verify your system meets minimum requirements for the software version."
+    },
+    {
+      step: 5,
+      title: "Reinstall the Application",
+      description: "Uninstall the software completely and download fresh installation files from official source."
+    }
+  ],
+  "software-errors": [
     {
       step: 1,
       title: "Restart the Application",
@@ -486,6 +567,33 @@ export const solutionsData = {
     }
   ],
   "file-access-issues": [
+    {
+      step: 1,
+      title: "Check File Permissions",
+      description: "Right-click the file > Properties > Security tab and ensure you have read/write permissions."
+    },
+    {
+      step: 2,
+      title: "Run as Administrator",
+      description: "Right-click the application and select 'Run as administrator' to access restricted files."
+    },
+    {
+      step: 3,
+      title: "Check File Association",
+      description: "Right-click file > Open with > Choose another app and select appropriate program."
+    },
+    {
+      step: 4,
+      title: "Check File Corruption",
+      description: "Try opening the file on another computer or use file repair tools if available."
+    },
+    {
+      step: 5,
+      title: "Disable Antivirus Temporarily",
+      description: "Temporarily disable antivirus to check if it's blocking file access, then add exception."
+    }
+  ],
+  "file-access": [
     {
       step: 1,
       title: "Check File Permissions",
